@@ -48,7 +48,9 @@
 	/**
 	 * @type {string}
 	 */
-	let cinemaType = 'tv show';
+	let cinemaType = '';
+	let numberofMeals = '';
+	let dietType = '';
 	/**
 	 * @type {Array<string>}
 	 */
@@ -62,17 +64,18 @@
 		endStream = false;
 		loading = true;
 
-		let fullSearchCriteria = `Give me a list of 5 ${cinemaType} recommendations ${
-			selectedCategories ? `that fit all of the following categories: ${selectedCategories}` : ''
+		let fullSearchCriteria = `Give me a list of ${numberofMeals} meals in a day that are in the cuisine ${cinemaType} and the type of diet is ${
+			dietType ? `that fit all of the following categories: ${selectedCategories}` : ''
 		}. ${
 			specificDescriptors
-				? `Make sure it fits the following description as well: ${specificDescriptors}.`
+				? `The meal should have the following amount of calories as well: ${specificDescriptors}.`
 				: ''
 		} ${
 			selectedCategories || specificDescriptors
-				? `If you do not have 5 recommendations that fit these criteria perfectly, do your best to suggest other ${cinemaType}'s that I might like.`
+				? ``
 				: ''
-		} Please return this response as a numbered list with the ${cinemaType}'s title, followed by a colon, and then a brief description of the ${cinemaType}. There should be a line of whitespace between each item in the list.`;
+		} Please return this response as a numbered list with the Name of the meal, followed by a colon, and then a brief description of the meal, ingredients and the quantity of the ingredients, a short recipe as well. There should be a line of whitespace between each item in the list. The details should be short and crisp`; 
+		//let fullSearchCriteria = `Give me a list of ${numberOfMeals} meals in a day that are in the cuisine ${cinemaType} and the type of diet is ${dietType} and should fit the following categories: ${selectedCategories.join(', ')}. The meal should have ${specificDescriptors} calories. Please return this response as a numbered list with the Name of the meal, followed by a colon, and then a brief description of the meal, ingredients and the quantity of the ingredients, a short recipe as well. There should be a line of whitespace between each item in the list. The details should be short and crisp`;
 		const response = await fetch('/api/getRecommendation', {
 			method: 'POST',
 			body: JSON.stringify({ searched: fullSearchCriteria }),
@@ -121,7 +124,7 @@
 </script>
 
 <div>
-	<div class="h-screen w-full bg-cover fixed" style="background-image: url(/background.png)">
+	<div class="h-screen w-full bg-cover fixed" style="background-image: url(/background.jpg)">
 		<div
 			class={`${
 				makeRecommendation ? 'backdrop-blur-md' : ''

@@ -56,7 +56,7 @@ async function rateLimitMiddleware(request: Request) {
 			await updateUserRequestData(userIP, userRequests);
 		} else {
 			// Check if the user has exceeded the rate limit (5 requests per day)
-			if (count >= 5) {
+			if (count >= 30) {
 				return new Response('Rate limit exceeded, come back tomorrow!', { status: 429 });
 			}
 
@@ -172,7 +172,7 @@ export async function POST({ request }: { request: any }) {
 		model: 'gpt-3.5-turbo',
 		messages: [{ role: 'user', content: searched }],
 		temperature: 0.7,
-		max_tokens: 2048,
+		max_tokens: 4096,
 		top_p: 1.0,
 		frequency_penalty: 0.0,
 		stream: true,
