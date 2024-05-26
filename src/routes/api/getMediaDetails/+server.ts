@@ -1,9 +1,9 @@
-import { UNSPLASH_ACCESS_KEY } from '$env/static/private';
+import { OMDB_API_KEY } from '$env/static/private';
 import { json } from '@sveltejs/kit';
 
 export async function POST({ request }: { request: any }) {
     const { title } = await request.json();
-    const url = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(title)}&client_id=${UNSPLASH_ACCESS_KEY}`;
+    const url = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(title)}&client_id=${OMDB_API_KEY}`;
 
     const res = await fetch(url);
     const details = await res.json();
