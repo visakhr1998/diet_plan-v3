@@ -64,18 +64,18 @@
 		endStream = false;
 		loading = true;
 
-		let fullSearchCriteria = `Give me a list of ${numberofMeals} meals in a day that are in the cuisine ${cinemaType} and the type of diet is ${
-			dietType ? `that fit all of the following categories: ${selectedCategories}` : ''
+		let fullSearchCriteria = `Give me a list of ${numberofMeals} ${cinemaType} meal recommendations ${
+			selectedCategories ? `that fit all of the following categories: ${selectedCategories}` : ''
 		}. ${
 			specificDescriptors
-				? `The meal should have the following amount of calories as well: ${specificDescriptors}.`
+				? `Make sure it has the following calories as well: ${specificDescriptors}.`
 				: ''
 		} ${
 			selectedCategories || specificDescriptors
-				? ``
+				? `If you do not have 5 recommendations that fit these criteria perfectly, do your best to suggest other ${cinemaType} meals that I might like.`
 				: ''
-		} Please return this response as a numbered list with the Name of the meal, followed by a colon, and then a brief description of the meal, ingredients and the quantity of the ingredients, a short recipe as well. There should be a line of whitespace between each item in the list. The details should be short and crisp`; 
-		//let fullSearchCriteria = `Give me a list of ${numberOfMeals} meals in a day that are in the cuisine ${cinemaType} and the type of diet is ${dietType} and should fit the following categories: ${selectedCategories.join(', ')}. The meal should have ${specificDescriptors} calories. Please return this response as a numbered list with the Name of the meal, followed by a colon, and then a brief description of the meal, ingredients and the quantity of the ingredients, a short recipe as well. There should be a line of whitespace between each item in the list. The details should be short and crisp`;
+		} Please return this response as a numbered list with the meal name and the time of the day where you eat it as the title, followed by a colon, and then a brief description of the meal alongwith the number of calories. List the ingredients and how to make in a small line. There should be a line of whitespace between each item in the list.`; 
+		//let fullSearchCriteria = `Give me a list of 3 meals in a day that are in the cuisine ${cinemaType} and the type of diet is ${dietType} and should fit the following categories: ${selectedCategories.join(', ')}. The meal should have ${specificDescriptors} calories. Please return this response as a numbered list with the Name of the meal, followed by a colon, and then a brief description of the meal, ingredients and the quantity of the ingredients, a short recipe as well. There should be a line of whitespace between each item in the list. The details should be short and crisp`;
 		const response = await fetch('/api/getRecommendation', {
 			method: 'POST',
 			body: JSON.stringify({ searched: fullSearchCriteria }),
@@ -121,6 +121,7 @@
 		selectedCategories = [];
 		specificDescriptors = '';
 	}
+
 </script>
 
 <div>
@@ -157,6 +158,7 @@
 						bind:cinemaType
 						bind:selectedCategories
 						bind:loading
+						bind:dietType
 						bind:specificDescriptors
 						on:click={search}
 					/>
@@ -187,6 +189,7 @@
 									<div class="mb-8">
 										{#if typeof recommendation !== 'string' && recommendation.title}
 											<RecommendationCard {recommendation} />
+			
 										{:else}
 											<div in:fade|global>
 												<LoadingCard incomingStream={recommendation} />
@@ -203,3 +206,4 @@
 		<Footer />
 	</div>
 </div>
+
