@@ -49,8 +49,8 @@
 	 * @type {string}
 	 */
 	let cinemaType = '';
-	let numberofMeals = '';
 	let dietType = '';
+	let numberOfMeals = 1;
 	/**
 	 * @type {Array<string>}
 	 */
@@ -64,7 +64,7 @@
 		endStream = false;
 		loading = true;
 
-		let fullSearchCriteria = `Give me a list of ${numberofMeals} ${cinemaType} meal recommendations ${
+		let fullSearchCriteria = `Give me a list of ${numberOfMeals} ${cinemaType} meal recommendations ${
 			selectedCategories ? `that fit all of the following categories: ${selectedCategories}` : ''
 		}. ${
 			specificDescriptors
@@ -72,10 +72,11 @@
 				: ''
 		} ${
 			selectedCategories || specificDescriptors
-				? `If you do not have 5 recommendations that fit these criteria perfectly, do your best to suggest other ${cinemaType} meals that I might like.`
+				? `If you do not have ${numberOfMeals} recommendations that fit these criteria perfectly, do your best to suggest other ${cinemaType} meals that I might like.`
 				: ''
-		} Please return this response as a numbered list with the meal name and the time of the day where you eat it as the title, followed by a colon, and then a brief description of the meal alongwith the number of calories. List the ingredients and how to make in a small line. There should be a line of whitespace between each item in the list.`; 
+		} Please return this response as a numbered list with the meal name and the time of the day where you eat it as the title, followed by a colon, and then a brief description of the meal alongwith the number of calories. There should be a line of whitespace between each item in the list.`; 
 		//let fullSearchCriteria = `Give me a list of 3 meals in a day that are in the cuisine ${cinemaType} and the type of diet is ${dietType} and should fit the following categories: ${selectedCategories.join(', ')}. The meal should have ${specificDescriptors} calories. Please return this response as a numbered list with the Name of the meal, followed by a colon, and then a brief description of the meal, ingredients and the quantity of the ingredients, a short recipe as well. There should be a line of whitespace between each item in the list. The details should be short and crisp`;
+		console.log("fullsearch", fullSearchCriteria);
 		const response = await fetch('/api/getRecommendation', {
 			method: 'POST',
 			body: JSON.stringify({ searched: fullSearchCriteria }),
@@ -159,6 +160,7 @@
 						bind:selectedCategories
 						bind:loading
 						bind:dietType
+						bind:numberOfMeals
 						bind:specificDescriptors
 						on:click={search}
 					/>
