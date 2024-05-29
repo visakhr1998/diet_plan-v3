@@ -68,13 +68,13 @@
 			selectedCategories ? `that fit all of the following categories: ${selectedCategories}` : ''
 		}. ${
 			specificDescriptors
-				? `Make sure it has the following calories as well: ${specificDescriptors}.`
+				? `Make sure the total sum of all the calories of all the meals comes to: ${specificDescriptors}.`
 				: ''
 		} ${
 			selectedCategories || specificDescriptors
 				? `If you do not have ${numberOfMeals} recommendations that fit these criteria perfectly, do your best to suggest other ${cinemaType} meals that I might like.`
 				: ''
-		} Please return this response as a numbered list with the meal name and the time of the day where you eat it as the title, followed by a colon, and then a brief description of the meal alongwith the number of calories. There should be a line of whitespace between each item in the list.`; 
+		} Please return this response as a numbered list with the meal name and the time of the day where you eat it as the title, followed by a colon, and then a brief description of the meal alongwith the number of calories of each meal. There should be a line of whitespace between each item in the list.`; 
 		//let fullSearchCriteria = `Give me a list of 3 meals in a day that are in the cuisine ${cinemaType} and the type of diet is ${dietType} and should fit the following categories: ${selectedCategories.join(', ')}. The meal should have ${specificDescriptors} calories. Please return this response as a numbered list with the Name of the meal, followed by a colon, and then a brief description of the meal, ingredients and the quantity of the ingredients, a short recipe as well. There should be a line of whitespace between each item in the list. The details should be short and crisp`;
 		console.log("fullsearch", fullSearchCriteria);
 		const response = await fetch('/api/getRecommendation', {
